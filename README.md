@@ -6,8 +6,8 @@ Professor: Vanderson Hafemann Fragal.
 
 ## Estado do projeto
 
-- Lista: implementada, com testes no programa principal.
-- Fila e Pilha: aguardando implementação e testes.
+- Lista e Pilha: implementada, com testes no programa principal.
+- Fila: aguardando implementação e testes.
 
 ## Compilar e executar
 
