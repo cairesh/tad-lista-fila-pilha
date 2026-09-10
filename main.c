@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "TADs.h"
 
-/* Confere conteudo, quantidade, indices e estados apos cada operacao. */
+/* Confere conteudo e quantidade*/
 int conferirLista(Lista lista, int quantidade, int a, int b, int c, int d, int e) {
     int esperado[TAMANHO_LISTA] = {a, b, c, d, e};
     int i;
@@ -31,9 +31,35 @@ int conferirBusca(Lista lista, int valor, int esperado) {
     return indice != esperado;
 }
 
+/* Valores esperados da base para o topo. */
+int conferirPilha(Pilha pilha, int quantidade, int a, int b, int c, int d, int e) {
+    int esperado[TAMANHO_PILHA] = {a, b, c, d, e};
+    int i;
+    exibirPilha(pilha);
+    if (pilha.topo != quantidade - 1 ||
+        pilhaVazia(pilha) != (quantidade == 0) ||
+        pilhaCheia(pilha) != (quantidade == TAMANHO_PILHA)) {
+        printf("FALHA: topo ou estado vazia/cheia da Pilha incorreto.\n");
+        return 1;
+    }
+    for (i = 0; i < quantidade; i++) {
+        if (pilha.dados[i] != esperado[i]) {
+            printf("FALHA: conteudo da Pilha incorreto na posicao %d.\n", i);
+            return 1;
+        }
+    }
+    if (quantidade > 0 && topoPilha(pilha) != esperado[quantidade - 1]) {
+        printf("FALHA: consulta ao topo da Pilha incorreta.\n");
+        return 1;
+    }
+    return 0;
+}
+
 int main(void) {
     Lista lista = criarLista();
     int falhas = 0;
+    Pilha pilha = criarPilha();
+    int falhasPilha = 0;
 
     printf("===== TESTES DA LISTA =====\nLista inicial:\n");
     falhas += conferirLista(lista, 0, 0, 0, 0, 0, 0);
@@ -134,79 +160,53 @@ int main(void) {
     /* TODO: integrante responsavel: pelo menos 6 enqueue e 6 dequeue
        intercalados; conferir FIFO, circularidade, overflow e underflow. */
     printf("TODO: integrante responsavel.\n");
-    
     printf("\n===== TESTES DA PILHA =====\n");
-
-    Pilha pilha = criarPilha();
-
-    printf("Pilha inicial:\n");
-    exibirPilha(pilha);
-
-    printf("Vazia? %d\n", pilhaVazia(pilha));
-    printf("Cheia? %d\n", pilhaCheia(pilha));
-
-    printf("\nPush 10...\n");
+    falhasPilha += conferirPilha(pilha, 0, 0, 0, 0, 0, 0);
     pilha = push(pilha, 10);
-    exibirPilha(pilha);
-
-    printf("\nPush 20...\n");
+    falhasPilha += conferirPilha(pilha, 1, 10, 0, 0, 0, 0);
     pilha = push(pilha, 20);
-    exibirPilha(pilha);
-
-    printf("\nPush 30...\n");
+    falhasPilha += conferirPilha(pilha, 2, 10, 20, 0, 0, 0);
     pilha = push(pilha, 30);
-    exibirPilha(pilha);
-
-    printf("\nTopo esperado: 30\n");
-    printf("Topo encontrado: %d\n", topoPilha(pilha));
-
-    printf("\nPop...\n");
+    falhasPilha += conferirPilha(pilha, 3, 10, 20, 30, 0, 0);
     pilha = pop(pilha);
-    exibirPilha(pilha);
-
-    printf("Topo esperado: 20\n");
-    printf("Topo encontrado: %d\n", topoPilha(pilha));
-
-    printf("\nPush 40...\n");
+    falhasPilha += conferirPilha(pilha, 2, 10, 20, 0, 0, 0);
     pilha = push(pilha, 40);
-
-    printf("Push 50...\n");
+    falhasPilha += conferirPilha(pilha, 3, 10, 20, 40, 0, 0);
     pilha = push(pilha, 50);
-
-    printf("Push 60...\n");
+    falhasPilha += conferirPilha(pilha, 4, 10, 20, 40, 50, 0);
     pilha = push(pilha, 60);
-
-    printf("Push 70 para preencher...\n");
+    falhasPilha += conferirPilha(pilha, 5, 10, 20, 40, 50, 60);
+    printf("Tentando overflow com 70...\n");
     pilha = push(pilha, 70);
-
-    exibirPilha(pilha);
-
-    printf("\nTentando overflow com 80...\n");
-    pilha = push(pilha, 80);
-    exibirPilha(pilha);
-
-    printf("\nRemovendo elementos:\n");
-
+    falhasPilha += conferirPilha(pilha, 5, 10, 20, 40, 50, 60);
     pilha = pop(pilha);
-    exibirPilha(pilha);
-
+    falhasPilha += conferirPilha(pilha, 4, 10, 20, 40, 50, 0);
     pilha = pop(pilha);
-    exibirPilha(pilha);
-
+    falhasPilha += conferirPilha(pilha, 3, 10, 20, 40, 0, 0);
     pilha = pop(pilha);
-    exibirPilha(pilha);
-
+    falhasPilha += conferirPilha(pilha, 2, 10, 20, 0, 0, 0);
     pilha = pop(pilha);
-    exibirPilha(pilha);
-
+    falhasPilha += conferirPilha(pilha, 1, 10, 0, 0, 0, 0);
     pilha = pop(pilha);
-    exibirPilha(pilha);
-
-    printf("\nTentando underflow:\n");
+    falhasPilha += conferirPilha(pilha, 0, 0, 0, 0, 0, 0);
+    printf("Tentando underflow...\n");
     pilha = pop(pilha);
-
-    printf("Vazia? %d\n", pilhaVazia(pilha));
+    falhasPilha += conferirPilha(pilha, 0, 0, 0, 0, 0, 0);
+    printf("Reutilizando a pilha com zero e valores repetidos negativos...\n");
+    pilha = push(pilha, 0);
+    falhasPilha += conferirPilha(pilha, 1, 0, 0, 0, 0, 0);
+    pilha = push(pilha, -1);
+    falhasPilha += conferirPilha(pilha, 2, 0, -1, 0, 0, 0);
+    pilha = push(pilha, -1);
+    falhasPilha += conferirPilha(pilha, 3, 0, -1, -1, 0, 0);
+    pilha = pop(pilha);
+    falhasPilha += conferirPilha(pilha, 2, 0, -1, 0, 0, 0);
+    pilha = pop(pilha);
+    falhasPilha += conferirPilha(pilha, 1, 0, 0, 0, 0, 0);
+    pilha = pop(pilha);
+    falhasPilha += conferirPilha(pilha, 0, 0, 0, 0, 0, 0);
 
     printf("\nResultado da Lista: %d falha(s).\n", falhas);
-    return falhas == 0 ? 0 : 1;
+    printf("Resultado da Pilha: %d falha(s).\n", falhasPilha);
+    return falhas == 0 && falhasPilha == 0 ? 0 : 1;
 }

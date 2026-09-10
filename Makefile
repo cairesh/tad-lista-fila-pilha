@@ -11,10 +11,10 @@ endif
 .PHONY: all lista final test
 all: lista
 
-# Modo atual: somente Lista e cliente.
+# Modo atual: Lista, Pilha e cliente.
 lista: programa$(EXT)
-programa$(EXT): main.o lista.o
-	$(CC) $(CFLAGS) main.o lista.o -o $@
+programa$(EXT): main.o lista.o pilha.o
+	$(CC) $(CFLAGS) main.o lista.o pilha.o -o $@
 
 # Modo final: completar os TODOs antes da entrega.
 final: programa-final$(EXT)
