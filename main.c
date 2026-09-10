@@ -134,10 +134,78 @@ int main(void) {
     /* TODO: integrante responsavel: pelo menos 6 enqueue e 6 dequeue
        intercalados; conferir FIFO, circularidade, overflow e underflow. */
     printf("TODO: integrante responsavel.\n");
+    
     printf("\n===== TESTES DA PILHA =====\n");
-    /* TODO: integrante responsavel: pelo menos 6 push e 6 pop
-       intercalados; conferir LIFO, topo, overflow e underflow. */
-    printf("TODO: integrante responsavel.\n");
+
+    Pilha pilha = criarPilha();
+
+    printf("Pilha inicial:\n");
+    exibirPilha(pilha);
+
+    printf("Vazia? %d\n", pilhaVazia(pilha));
+    printf("Cheia? %d\n", pilhaCheia(pilha));
+
+    printf("\nPush 10...\n");
+    pilha = push(pilha, 10);
+    exibirPilha(pilha);
+
+    printf("\nPush 20...\n");
+    pilha = push(pilha, 20);
+    exibirPilha(pilha);
+
+    printf("\nPush 30...\n");
+    pilha = push(pilha, 30);
+    exibirPilha(pilha);
+
+    printf("\nTopo esperado: 30\n");
+    printf("Topo encontrado: %d\n", topoPilha(pilha));
+
+    printf("\nPop...\n");
+    pilha = pop(pilha);
+    exibirPilha(pilha);
+
+    printf("Topo esperado: 20\n");
+    printf("Topo encontrado: %d\n", topoPilha(pilha));
+
+    printf("\nPush 40...\n");
+    pilha = push(pilha, 40);
+
+    printf("Push 50...\n");
+    pilha = push(pilha, 50);
+
+    printf("Push 60...\n");
+    pilha = push(pilha, 60);
+
+    printf("Push 70 para preencher...\n");
+    pilha = push(pilha, 70);
+
+    exibirPilha(pilha);
+
+    printf("\nTentando overflow com 80...\n");
+    pilha = push(pilha, 80);
+    exibirPilha(pilha);
+
+    printf("\nRemovendo elementos:\n");
+
+    pilha = pop(pilha);
+    exibirPilha(pilha);
+
+    pilha = pop(pilha);
+    exibirPilha(pilha);
+
+    pilha = pop(pilha);
+    exibirPilha(pilha);
+
+    pilha = pop(pilha);
+    exibirPilha(pilha);
+
+    pilha = pop(pilha);
+    exibirPilha(pilha);
+
+    printf("\nTentando underflow:\n");
+    pilha = pop(pilha);
+
+    printf("Vazia? %d\n", pilhaVazia(pilha));
 
     printf("\nResultado da Lista: %d falha(s).\n", falhas);
     return falhas == 0 ? 0 : 1;
