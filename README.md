@@ -5,10 +5,10 @@ Professor: Vanderson Hafemann Fragal
 Implementação de Tipos Abstratos de Dados utilizando linguagem C.
 Repositório: tad-lista-fila-pilha. Biblioteca estática de Lista, Fila e Pilha.
 
-Equipe: Henrique e Arthur.
+Equipe: Henrique, Arthur e Samuel.
 
 Divisão inicial: Lista com Henrique e Pilha com Arthur. A Fila foi
-concluída na integração final do projeto.
+implementada por Samuel, concluída na integração final do projeto.
 
 A Lista está implementada com vetor de capacidade 5, sem valores repetidos.
 A busca sequencial retorna o índice (a partir de zero) ou -1. A inserção
