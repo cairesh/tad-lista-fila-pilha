@@ -40,7 +40,12 @@ Arquivos:
 - `TADs.h`: cabeçalho agregador dos três módulos.
 - `main.c`: testes automáticos de Lista, Fila e Pilha.
 - `Makefile`: compilação direta e com biblioteca estática, e testes.
-- `TADs.a`: biblioteca gerada com os três objetos; não é versionada.
+- `TADs.a`: biblioteca estática incluída na entrega, com os três objetos.
+
+A biblioteca incluída foi compilada no Windows com MinGW. Para executar
+em outro ambiente, recompile a partir dos fontes com `make -B test`
+(ou `mingw32-make -B test` no PowerShell). Isso recria a biblioteca para
+o ambiente do professor e executa os testes dos três módulos.
 
 Compilar e executar com GCC e GNU Make (Linux):
 
